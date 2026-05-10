@@ -1,0 +1,71 @@
+@font-face {
+  font-family: 'ApfelGrotezk-Satt';
+  src: url('./fonts/ApfelGrotezk-Satt.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ApfelGrotezk-Regular';
+  src: url('./fonts/ApfelGrotezk-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --bg: #1F1F1E;
+  --gold: #f9df7b;
+  --gold-dim: rgba(249, 223, 123, 0.6);
+  --gold-faint: rgba(249, 223, 123, 0.15);
+  --gold-border: rgba(249, 223, 123, 0.3);
+  --sans: 'ApfelGrotezk-Regular', system-ui, sans-serif;
+  --serif: 'ApfelGrotezk-Satt', system-ui, sans-serif;
+
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--gold);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--gold);
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (max-width: 600px) {
+  :root {
+    font-size: 15px;
+  }
+}
+
+#root {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: normal;
+  color: var(--gold);
+  margin: 0;
+  text-transform: none;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--gold);
+  text-decoration: none;
+}
