@@ -76,12 +76,10 @@ function Share() {
       if (!c) return;
       const raw = playerInstance.getCurrentTime();
       if (raw >= c.end_time) {
-        playerInstance.pauseVideo();
         playerInstance.seekTo(c.start_time);
         setCurrentTime(c.start_time);
-        setIsPlaying(false);
         setCurrentSubtitle('');
-        clearInterval(intervalRef.current);
+        setIsInSlot(false);
         return;
       }
       setCurrentTime(raw);

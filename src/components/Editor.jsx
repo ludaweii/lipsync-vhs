@@ -70,13 +70,10 @@ function Editor() {
       if (!c) return;
       const raw = playerInstance.getCurrentTime();
       if (raw >= c.end_time) {
-        playerInstance.pauseVideo();
         playerInstance.seekTo(c.start_time);
         setCurrentTime(c.start_time);
-        setIsPlaying(false);
         setCurrentSubtitle('');
         setIsInSlot(false);
-        clearInterval(intervalRef.current);
         return;
       }
       setCurrentTime(raw);

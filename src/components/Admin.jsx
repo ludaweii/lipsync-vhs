@@ -138,8 +138,7 @@ function Admin() {
           const currentTime = event.target.getCurrentTime();
           setCurrentTime(currentTime);
           if (currentTime >= endTime) {
-            event.target.pauseVideo();
-            setIsPlaying(false);
+            event.target.seekTo(startTime);
             setCurrentTime(startTime);
           }
         }
