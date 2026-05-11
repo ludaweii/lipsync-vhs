@@ -138,8 +138,11 @@ function Admin() {
           const currentTime = event.target.getCurrentTime();
           setCurrentTime(currentTime);
           if (currentTime >= endTime) {
-            event.target.seekTo(startTime);
+            event.target.seekTo(startTime, true);
+            event.target.pauseVideo();
+            setIsPlaying(false);
             setCurrentTime(startTime);
+            clearInterval(progressIntervalRef.current);
           }
         }
       }, 100);
@@ -347,8 +350,7 @@ function Admin() {
             controls: 0,
             disablekb: 1,
             iv_load_policy: 3,
-            start: Math.floor(startTime),
-            end: Math.floor(endTime)
+            start: Math.floor(startTime)
           }
         }}
       />

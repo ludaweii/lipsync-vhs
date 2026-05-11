@@ -70,10 +70,13 @@ function Editor() {
       if (!c) return;
       const raw = playerInstance.getCurrentTime();
       if (raw >= c.end_time) {
-        playerInstance.seekTo(c.start_time);
+        playerInstance.seekTo(c.start_time, true);
+        playerInstance.pauseVideo();
         setCurrentTime(c.start_time);
+        setIsPlaying(false);
         setCurrentSubtitle('');
         setIsInSlot(false);
+        clearInterval(intervalRef.current);
         return;
       }
       setCurrentTime(raw);
@@ -165,7 +168,6 @@ function Editor() {
                 width: '640',
                 playerVars: {
                   start: Math.floor(clip.start_time),
-                  end: Math.ceil(clip.end_time),
                   controls: 0,
                   modestbranding: 1,
                   rel: 0,
