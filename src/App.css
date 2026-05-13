@@ -305,8 +305,8 @@ input::placeholder {
   transform: translateX(-50%);
   width: calc(100% - 40px);
   padding: 10px 14px;
-  background: rgba(0, 0, 0, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  border: none;
   color: #ffffff;
   text-align: center;
   font-family: var(--sans);
@@ -384,7 +384,7 @@ input::placeholder {
 .subtitle-slot-row label {
   font-family: var(--sans);
   font-size: 13px;
-  color: var(--gold-dim);
+  color: #7018A0;
 }
 
 /* ── Share link ── */
