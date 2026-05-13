@@ -41,8 +41,12 @@ function Admin() {
   const [editingClipId, setEditingClipId] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [activeSlotLabel, setActiveSlotLabel] = useState('');
   const progressIntervalRef = useRef(null);
+  const subtitleSlotsRef = useRef([]);
   const navigate = useNavigate();
+
+  useEffect(() => { subtitleSlotsRef.current = subtitleSlots; }, [subtitleSlots]);
 
   useEffect(() => {
     if (authenticated && step === 1) {
@@ -137,10 +141,15 @@ function Admin() {
         if (event.target) {
           const currentTime = event.target.getCurrentTime();
           setCurrentTime(currentTime);
+          const activeIndex = subtitleSlotsRef.current.findIndex(
+            s => currentTime >= s.start_time && currentTime <= s.end_time
+          );
+          setActiveSlotLabel(activeIndex >= 0 ? `Sous-titre ${activeIndex + 1}` : '');
           if (currentTime >= endTime) {
             event.target.seekTo(startTime, true);
             event.target.pauseVideo();
             setIsPlaying(false);
+            setActiveSlotLabel('');
             setCurrentTime(startTime);
             clearInterval(progressIntervalRef.current);
           }
@@ -148,6 +157,7 @@ function Admin() {
       }, 100);
     } else {
       setIsPlaying(false);
+      setActiveSlotLabel('');
       if (progressIntervalRef.current) {
         clearInterval(progressIntervalRef.current);
       }
@@ -337,23 +347,28 @@ function Admin() {
         <h1>Admin - Etape 2 {editingClipId && '(Modification)'}</h1>
         <button className="view-site-btn" onClick={() => navigate('/')}>Voir le site</button>
       </div>
-      <YouTube
-        videoId={videoId}
-        onReady={onPlayerReady}
-        onStateChange={onPlayerStateChange}
-        opts={{
-          height: '600',
-          width: '900',
-          playerVars: {
-            modestbranding: 1,
-            rel: 0,
-            controls: 0,
-            disablekb: 1,
-            iv_load_policy: 3,
-            start: Math.floor(startTime)
-          }
-        }}
-      />
+      <div style={{ position: 'relative', display: 'inline-block' }}>
+        <YouTube
+          videoId={videoId}
+          onReady={onPlayerReady}
+          onStateChange={onPlayerStateChange}
+          opts={{
+            height: '600',
+            width: '900',
+            playerVars: {
+              modestbranding: 1,
+              rel: 0,
+              controls: 0,
+              disablekb: 1,
+              iv_load_policy: 3,
+              start: Math.floor(startTime)
+            }
+          }}
+        />
+        {activeSlotLabel && (
+          <div className="subtitle-overlay">{activeSlotLabel}</div>
+        )}
+      </div>
       <div className="player-controls">
         <button className="play-pause-btn" onClick={togglePlayPause}>
           {isPlaying ? 'Pause' : 'Jouer'}
