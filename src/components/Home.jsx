@@ -26,6 +26,7 @@ function Home() {
   const intervalRef = useRef(null);
   const clipRef = useRef(null);
   const subtitleSlotsRef = useRef([]);
+  const endedRef = useRef(false);
 
   useEffect(() => {
     fetchClips();
@@ -46,6 +47,7 @@ function Home() {
 
   const selectClip = async (clip) => {
     if (intervalRef.current) clearInterval(intervalRef.current);
+    endedRef.current = false;
     setIsPlaying(false);
     setIsInSlot(false);
     setPlayer(null);
@@ -64,7 +66,10 @@ function Home() {
   const onPlayerReady = (event) => {
     setPlayer(event.target);
     const c = clipRef.current;
-    if (c) event.target.seekTo(c.start_time);
+    if (c) {
+      event.target.seekTo(c.start_time);
+      event.target.pauseVideo();
+    }
   };
 
   const startPolling = (playerInstance) => {
@@ -74,6 +79,7 @@ function Home() {
       if (!c) return;
       const raw = playerInstance.getCurrentTime();
       if (raw >= c.end_time) {
+        endedRef.current = true;
         playerInstance.pauseVideo();
         playerInstance.seekTo(c.start_time);
         setIsPlaying(false);
@@ -90,16 +96,17 @@ function Home() {
 
   const handleStateChange = (event) => {
     if (event.data === 1) {
+      if (endedRef.current) {
+        endedRef.current = false;
+        event.target.pauseVideo();
+        return;
+      }
       setIsPlaying(true);
       startPolling(event.target);
     } else if (event.data === 2 || event.data === 0) {
       setIsPlaying(false);
       setIsInSlot(false);
       if (intervalRef.current) clearInterval(intervalRef.current);
-      if (event.data === 0) {
-        const c = clipRef.current;
-        if (c) event.target.seekTo(c.start_time);
-      }
     }
   };
 
