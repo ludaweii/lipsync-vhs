@@ -168,7 +168,6 @@ function Home() {
                 }}
               />
               <div className="click-overlay" onClick={togglePlay} />
-              {isInSlot && <div className="subtitle-overlay" />}
             </div>
             <div className="home-preview-cta">
               <button
