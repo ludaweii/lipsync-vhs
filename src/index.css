@@ -12,13 +12,20 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'unb_pro_bold';
+  src: url('./fonts/unb_pro_bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
-  --bg: #1F1F1E;
-  --gold: #f9df7b;
-  --gold-dim: rgba(249, 223, 123, 0.6);
-  --gold-faint: rgba(249, 223, 123, 0.15);
-  --gold-border: rgba(249, 223, 123, 0.3);
-  --sans: 'ApfelGrotezk-Regular', system-ui, sans-serif;
+  --bg: #ffffff;
+  --gold: #000000;
+  --gold-dim: rgba(0, 0, 0, 0.6);
+  --gold-faint: rgba(0, 0, 0, 0.15);
+  --gold-border: rgba(0, 0, 0, 0.3);
+  --sans: 'unb_pro_bold', system-ui, sans-serif;
   --serif: 'ApfelGrotezk-Satt', system-ui, sans-serif;
 
   font-family: var(--sans);
