@@ -27,6 +27,7 @@ function Home() {
   const clipRef = useRef(null);
   const subtitleSlotsRef = useRef([]);
   const endedRef = useRef(false);
+  const shouldAutoPlayRef = useRef(false);
 
   useEffect(() => {
     fetchClips();
@@ -45,9 +46,10 @@ function Home() {
     setLoading(false);
   };
 
-  const selectClip = async (clip) => {
+  const selectClip = async (clip, autoPlay = false) => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     endedRef.current = false;
+    shouldAutoPlayRef.current = autoPlay;
     setIsPlaying(false);
     setIsInSlot(false);
     setPlayer(null);
@@ -68,7 +70,12 @@ function Home() {
     const c = clipRef.current;
     if (c) {
       event.target.seekTo(c.start_time);
-      event.target.pauseVideo();
+      if (shouldAutoPlayRef.current) {
+        shouldAutoPlayRef.current = false;
+        event.target.playVideo();
+      } else {
+        event.target.pauseVideo();
+      }
     }
   };
 
@@ -135,7 +142,7 @@ function Home() {
                 <div
                   key={clip.id}
                   className={`clip-card${selectedClip?.id === clip.id ? ' clip-card--active' : ''}`}
-                  onClick={() => selectClip(clip)}
+                  onClick={() => selectClip(clip, true)}
                 >
                   {getYoutubeThumbnail(clip) && (
                     <img
@@ -159,8 +166,8 @@ function Home() {
                 onReady={onPlayerReady}
                 onStateChange={handleStateChange}
                 opts={{
-                  height: '520',
-                  width: '640',
+                  height: '780',
+                  width: '960',
                   playerVars: {
                     start: Math.floor(selectedClip.start_time),
                     end: Math.ceil(selectedClip.end_time),

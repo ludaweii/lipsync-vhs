@@ -79,7 +79,16 @@
   margin-top: 16px;
   display: flex;
   justify-content: flex-end;
-  width: 640px;
+  width: 960px;
+}
+
+.home-preview .player-overlay-wrapper {
+  width: 960px;
+  height: 585px;
+}
+
+.home-preview .player-overlay-wrapper iframe {
+  margin-top: -98px;
 }
 
 .cta-button {
