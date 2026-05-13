@@ -499,7 +499,7 @@ input::placeholder {
   display: grid;
   grid-template-columns: 1fr 1fr auto;
   gap: 10px;
-  align-items: start;
+  align-items: stretch;
   margin-top: 10px;
 }
 
@@ -513,7 +513,6 @@ input::placeholder {
   border-radius: 4px;
   line-height: 1;
   transition: color 0.15s, border-color 0.15s;
-  height: 37px;
   width: 37px;
   min-width: 37px;
   display: flex;
