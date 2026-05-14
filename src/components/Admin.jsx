@@ -390,7 +390,7 @@ function Admin() {
           />
         </div>
         <span className="time-display">
-          {currentTime.toFixed(1)}s / {endTime.toFixed(1)}s
+          {toTimeStr(currentTime)} / {toTimeStr(endTime)}
         </span>
       </div>
       <div>
