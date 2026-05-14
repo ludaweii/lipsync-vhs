@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import YouTube from 'react-youtube';
 import { supabase } from '../supabase';
 
@@ -146,6 +146,10 @@ function Share() {
 
   return (
     <div className="share">
+      <div className="share-top">
+        <Link to="/" className="logo">new délice</Link>
+        <Link to="/" className="view-site-btn">Voir le site</Link>
+      </div>
       <h1>{share.title}</h1>
       <div className="player-overlay-wrapper">
         <YouTube
@@ -153,8 +157,8 @@ function Share() {
           onReady={onPlayerReady}
           onStateChange={handleStateChange}
           opts={{
-            height: '520',
-            width: '640',
+            height: '780',
+            width: '960',
             playerVars: {
               start: Math.floor(clip.start_time),
               controls: 0,
@@ -168,6 +172,14 @@ function Share() {
           }}
         />
         <div className="click-overlay" onClick={togglePlay} />
+        {!isPlaying && (
+          <button className="play-overlay-btn" onClick={togglePlay} aria-label="Lire">
+            <svg viewBox="0 0 68 48" width="68" height="48">
+              <rect rx="10" width="68" height="48" fill="#7018A0" />
+              <path d="M45,24 L28,14 L28,34 Z" fill="white" />
+            </svg>
+          </button>
+        )}
         {isInSlot && (
           <div className="subtitle-overlay">{currentSubtitle}</div>
         )}
