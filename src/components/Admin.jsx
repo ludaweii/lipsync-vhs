@@ -86,7 +86,7 @@ function Admin() {
     setYoutubeUrl(clip.yt_url || clip.youtube_url);
     const urlMatch = (clip.yt_url || clip.youtube_url).match(/([a-zA-Z0-9_-]{11})/);
     setVideoId(urlMatch ? urlMatch[1] : '');
-    setClipName(clip.title || clip.name || '');
+    setClipName(clip.name || clip.title || '');
     setStartTime(clip.start_time);
     setStartTimeStr(toTimeStr(clip.start_time));
     setEndTime(clip.end_time);
@@ -206,16 +206,21 @@ function Admin() {
       let clipId = editingClipId;
 
       if (editingClipId) {
-        const { error } = await supabase.from('clips').update({
+        const { data: updatedRows, error } = await supabase.from('clips').update({
+          name: clipName,
+          title: clipName,
           youtube_url: youtubeUrl,
           yt_url: youtubeUrl,
           start_time: startTime,
           end_time: endTime,
-          title: clipName,
-        }).eq('id', editingClipId);
+        }).eq('id', editingClipId).select();
 
         if (error) {
           setErrorMessage('Erreur clip : ' + error.message);
+          return;
+        }
+        if (!updatedRows || updatedRows.length === 0) {
+          setErrorMessage('Modification refusée par Supabase. Va dans le dashboard Supabase → Table Editor → clips → Policies et ajoute une politique UPDATE pour le rôle anon.');
           return;
         }
 
@@ -312,7 +317,7 @@ function Admin() {
               {clips.map(clip => (
                 <div key={clip.id} className="clip-row">
                   <div className="clip-info">
-                    <strong>{clip.title || clip.name}</strong>
+                    <strong>{clip.name || clip.title}</strong>
                     <p>Duree: {(clip.end_time - clip.start_time).toFixed(1)}s | Slots: {slotCounts[clip.id] || 0}</p>
                   </div>
                   <div className="clip-actions">
