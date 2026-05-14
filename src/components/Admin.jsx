@@ -86,7 +86,7 @@ function Admin() {
     setYoutubeUrl(clip.yt_url || clip.youtube_url);
     const urlMatch = (clip.yt_url || clip.youtube_url).match(/([a-zA-Z0-9_-]{11})/);
     setVideoId(urlMatch ? urlMatch[1] : '');
-    setClipName(clip.name || clip.title || '');
+    setClipName(clip.title || clip.name || '');
     setStartTime(clip.start_time);
     setStartTimeStr(toTimeStr(clip.start_time));
     setEndTime(clip.end_time);
@@ -211,7 +211,6 @@ function Admin() {
           yt_url: youtubeUrl,
           start_time: startTime,
           end_time: endTime,
-          name: clipName,
           title: clipName,
         }).eq('id', editingClipId);
 
@@ -227,8 +226,7 @@ function Admin() {
           yt_url: youtubeUrl,
           start_time: startTime,
           end_time: endTime,
-          title: 'Nouveau clip',
-          name: clipName
+          title: clipName,
         }).select().single();
 
         if (error) {
@@ -314,7 +312,7 @@ function Admin() {
               {clips.map(clip => (
                 <div key={clip.id} className="clip-row">
                   <div className="clip-info">
-                    <strong>{clip.name || clip.title}</strong>
+                    <strong>{clip.title || clip.name}</strong>
                     <p>Duree: {(clip.end_time - clip.start_time).toFixed(1)}s | Slots: {slotCounts[clip.id] || 0}</p>
                   </div>
                   <div className="clip-actions">
