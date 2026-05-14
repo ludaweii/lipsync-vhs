@@ -174,7 +174,7 @@ function Share() {
         <div className="click-overlay" onClick={togglePlay} />
         {!isPlaying && (
           <button className="play-overlay-btn" onClick={togglePlay} aria-label="Lire">
-            <svg viewBox="0 0 68 48" width="68" height="48">
+            <svg viewBox="0 0 68 48" width="88" height="62">
               <rect rx="10" width="68" height="48" fill="#7018A0" />
               <path d="M45,24 L28,14 L28,34 Z" fill="white" />
             </svg>

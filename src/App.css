@@ -177,6 +177,7 @@
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 28px;
+  width: 960px;
 }
 
 .share h1 {
@@ -211,13 +212,12 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  opacity: 0.9;
-  transition: opacity 0.15s, transform 0.15s;
+  opacity: 1;
+  transition: transform 0.15s;
   line-height: 0;
 }
 
 .play-overlay-btn:hover {
-  opacity: 1;
   transform: translate(-50%, -50%) scale(1.08);
 }
 
